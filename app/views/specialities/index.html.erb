@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Specialities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Doctors</th>
+      <th>Consults</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @specialities.each do |speciality| %>
+      <tr>
+        <td><%= speciality.name %></td>
+        <td><%= link_to speciality.doctors.count, doctors_path(:speciality_id => speciality.id) %></td> <!-- Columna con la cantidad de doctores que posee la especialidad 3.1 -->
+        <td>                                                                                            <!--Modificar el dato de las columnas agregadas en el punto a y b para que sean enlaces a la lista correspondiente filtrando por especialidad.-->
+            <% total = 0 %><!--Columna con la cantidad consultas de la especialidad. 3.2-->
+            <% speciality.doctors.each do |p| %>
+            <% total = total + p.consults.count %>
+            <% end %>
+            <%= link_to total, consults_path(:speciality_id => speciality.id) %>
+        </td>
+        <td><%= link_to 'Show', speciality %></td>
+        <td><%= link_to 'Edit', edit_speciality_path(speciality) %></td>
+        <td><%= link_to 'Destroy', speciality, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Speciality', new_speciality_path %>
